@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <navigation-bar></navigation-bar>
+  </div>
+  <main>
+    <router-view></router-view>
+  </main>
+  <div></div>
+  <div
+    class="alert alert-danger margin position-absolute top-50 start-50 translate-middle"
+    role="alert"
+    v-show="isThereError.length > 1"
+  >
+   {{ isThereError }}
+  </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import NavigationBar from "./components/ReusableComponents/NavigationBar.vue";
+import { mapGetters } from "vuex";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    NavigationBar,
+  },
+
+  created() {
+    this.$store.dispatch("tryLogin");
+  },
+  computed: {
+    ...mapGetters(["isThereError"]),
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
